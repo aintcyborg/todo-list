@@ -1,39 +1,28 @@
-import React, { useState } from 'react'
+import React, {useState} from "react"
 
-
-
-export default function TodoForm(props) {
-    //state
-    const { input, setInput } = useState(" ");//keeps track of user input
-
-    //user-defined :all the letters or the words have to get updated constantly when the user is typing
-    const handleChange = e => {
+function TodoForm(props){
+    const [input, setInput] = useState("")
+    
+    const handleChange = e =>{
+        if(!e.target.value)
+            return
         setInput(e.target.value)
     }
-
-
-
-    //user-defined function:to handle the change or the inputs on submission
-    const handleSubmit = (e) => {
-        //prevent reload of todo tasks on button click:
+    
+    const handleSubmit = e => {
         e.preventDefault();
         props.addTask({
-            id: Math.floor(Math.random() * 1000),
+            id:Math.floor(Math.random()*1000000),
             text: input,
-            // handled by todolist.js component by function isCompleted
             isComplete: false
-
-        });
-        //setinput to empty string
-        setInput('');
-
+        })
+        setInput('')  
     }
-
-
-    return (<form>
-        <input type="text" placeholder='Add a TODO' onChange={handleChange} className="todo-input" value={input} name="text" />
-        {/* the className is used to handle css of the button */}
-        <button type="submit" onClick={handleSubmit} className="todo-btn">Add TODO</button>
-    </form>);
+    return(
+        <form className="todo-form">
+            <input type="text" placeholder="Title...." onChange={handleChange} value={input}  className="todo-input"/>
+            <button type="submit" className="todo-btn" onClick={handleSubmit}>ADD</button>
+        </form>
+    )
 }
-
+export default TodoForm
